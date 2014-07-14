@@ -5,7 +5,7 @@ Snapshot and restore 模块允许创建单个索引或者整个集群的快照�
 在初始版本里只支持共享文件系统的仓库，但是现在通过官方的仓库插件可以支持各种各样的后台仓库。
 
 [float]
-=== Repositories
+=== 仓库
 
 在进行任何快照或者恢复操作之前必须有一个快照仓库注册在Elasticsearch里。下面的这个命令注册了
 一个名为 `my_backup` 的共享文件系统仓库，快照将会存储在 `/mount/backups/my_backup` 这个目录。
