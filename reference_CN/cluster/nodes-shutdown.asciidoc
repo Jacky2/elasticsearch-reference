@@ -1,32 +1,30 @@
 [[cluster-nodes-shutdown]]
-== Nodes Shutdown
+== 关闭节点
 
-The nodes shutdown API allows to shutdown one or more (or all) nodes in
-the cluster. Here is an example of shutting the `_local` node the
-request is directed to:
+关闭节点的API允许关闭集群中的一个或多个（或者全部）节点。下面是一个关闭
+ `_local` 节点的例子：
 
 [source,js]
 --------------------------------------------------
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown'
 --------------------------------------------------
 
-Specific node(s) can be shutdown as well using their respective node ids
-(or other selective options as explained
-<<cluster-nodes,here>> .):
+也可以通过各自的节点ID来关闭指定的节点（或者像<<cluster-nodes,这里>>说明
+的别的选项）:
 
 [source,js]
 --------------------------------------------------
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/nodeId1,nodeId2/_shutdown'
 --------------------------------------------------
 
-The master (of the cluster) can also be shutdown using:
+集群的主节点也可以使用下面的方法来关闭：
 
 [source,js]
 --------------------------------------------------
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_master/_shutdown'
 --------------------------------------------------
 
-Finally, all nodes can be shutdown using one of the options below:
+最后，可以使用如下的任意一种方法来关闭所有的节点：
 
 [source,js]
 --------------------------------------------------
@@ -39,11 +37,10 @@ $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_all/_shutdown'
 
 [float]
 [[delay]]
-=== Delay
+=== 延迟
 
-By default, the shutdown will be executed after a 1 second delay (`1s`).
-The delay can be customized by setting the `delay` parameter in a time
-value format. For example:
+默认情况下，关闭命令会延迟1秒(`1s`)之后执行。可以通过设置 `delay` 参数
+来指定延迟的时间。比如：
 
 [source,js]
 --------------------------------------------------
@@ -51,7 +48,6 @@ $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown?delay=10s'
 --------------------------------------------------
 
 [float]
-=== Disable Shutdown
+=== 禁用关闭命令
 
-The shutdown API can be disabled by setting `action.disable_shutdown` in
-the node configuration.
+关闭的API可以通过设置节点里的 `action.disable_shutdown` 选项来禁用。
