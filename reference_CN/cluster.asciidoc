@@ -1,16 +1,14 @@
 [[cluster]]
-= Cluster APIs
+= 集群 APIs
 
 [partintro]
 --
 ["float",id="cluster-nodes"]
-== Node specification
+== 节点指定
 
-Most cluster level APIs allow to specify which nodes to execute on (for
-example, getting the node stats for a node). Nodes can be identified in
-the APIs either using their internal node id, the node name, address,
-custom attributes, or just the `_local` node receiving the request. For
-example, here are some sample executions of nodes info:
+大部分集群级别的API允许指定在哪些节点上执行（比如，从一个几点获取状态）。
+在API里可以通过内部的节点ID，节点名字，地址，定制属性去区分节点，或者只
+是 `_local` 节点接受请求。比如，下面是一些在节点执行请求的例子：
 
 [source,js]
 --------------------------------------------------

@@ -1,55 +1,47 @@
 [[index-modules-cache]]
-== Cache
+== 缓存
 
+索引里有不同的缓存内置模块，包括 `filter` 以及其他。
 There are different caching inner modules associated with an index. They
 include `filter` and others.
 
 [float]
 [[filter]]
-=== Filter Cache
+=== Filter 缓存
 
-The filter cache is responsible for caching the results of filters (used
-in the query). The default implementation of a filter cache (and the one
-recommended to use in almost all cases) is the `node` filter cache type.
+filter缓存是用来缓存filter(在查询中使用)的结果。filter缓存的默认的默认实现
+(也是几乎所有情况下都推荐使用的方式)是 `节点` filter缓存类型。
 
 [float]
 [[node-filter]]
-==== Node Filter Cache
+==== 节点Filter缓存
 
-The `node` filter cache may be configured to use either a percentage of
-the total memory allocated to the process or an specific amount of
-memory. All shards present on a node share a single node cache (thats
-why its called `node`). The cache implements an LRU eviction policy:
-when a cache becomes full, the least recently used data is evicted to
-make way for new data.
+`节点` filter缓存是设计来使用一定比例的分配的内存或者是一定数量的内存。一个
+节点上的所有分片共享一个节点缓存(那就是为什么它被称为 `节点`)。缓存实现了一个
+LRU回收策略：当缓存满的时候，当前最少使用的数据将被回收，以便存储新的数据。
 
-The setting that allows one to control the memory size for the filter
-cache is `indices.cache.filter.size`, which defaults to `10%`. *Note*,
-this is *not* an index level setting but a node level setting (can be
-configured in the node configuration).
+允许控制filter缓存的内存大小的设置是 `indices.cache.filter.size` ，它的默认值是
+ `10%` 。 *注意* ，这个 *不是* index级别的设置是节点级别的设置(可以在节点配置里
+ 进行设置)。
 
-`indices.cache.filter.size` can accept either a percentage value, like
-`30%`, or an exact value, like `512mb`.
+`indices.cache.filter.size` 的值可以是一个百分比，比如 `30%` ，也可以是一个具体
+的值，比如 `512mb` 。
 
 [float]
 [[index-filter]]
-==== Index Filter Cache
+==== Index Filter 缓存
 
-A filter cache that exists on the index level (on each node). Generally,
-not recommended for use since its memory usage depends on which shards
-are allocated on each node and its hard to predict it. The types are:
-`resident`, `soft` and `weak`.
+这是一个index(在每个节点上)级别的filter缓存。通常来说不推荐使用它。因为内存的使用
+依赖于每个节点上有多少个分片而且很难预测。它的类型有： `resident`, `soft` 和 `weak` 。
 
-All types support the following settings:
+所有的类型都支持下面的设置：
 
 [cols="<,<",options="header",]
 |=======================================================================
-|Setting |Description
-|`index.cache.filter.max_size` |The max size (count, not byte size) of
-the cache (per search segment in a shard). Defaults to not set (`-1`),
-which is usually fine with `soft` cache and proper cacheable filters.
+|设置 |描述
+|`index.cache.filter.max_size` |缓存(每个分片的搜索区一个)的最大个数(不是字节大小)。
+默认不设置成 `-1` , 这个配置对 `soft` 缓存和合适的可缓存的filter都是可以的。
 
-|`index.cache.filter.expire` |A time based setting that expires filters
-after a certain time of inactivity. Defaults to `-1`. For example, can
-be set to `5m` for a 5 minute expiry.
+|`index.cache.filter.expire` |filter没有活动超过这个时间就会过期。默认值是 `-1` 。比
+如， 可以设置成 `5m` 表示5分钟过期。
 |=======================================================================
