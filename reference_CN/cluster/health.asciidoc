@@ -1,8 +1,7 @@
 [[cluster-health]]
-== Cluster Health
+== 集群健康
 
-The cluster health API allows to get a very simple status on the health
-of the cluster.
+集群健康API允许获得集群的一个简单的健康状态。
 
 [source,js]
 --------------------------------------------------
@@ -21,26 +20,18 @@ $ curl -XGET 'http://localhost:9200/_cluster/health?pretty=true'
 }
 --------------------------------------------------
 
-The API can also be executed against one or more indices to get just the
-specified indices health:
+API同时也能在一个或多个索引上执行去获得指定索引的健康状态：
 
 [source,js]
 --------------------------------------------------
 $ curl -XGET 'http://localhost:9200/_cluster/health/test1,test2'
 --------------------------------------------------
 
-The cluster health status is: `green`, `yellow` or `red`. On the shard
-level, a `red` status indicates that the specific shard is not allocated
-in the cluster, `yellow` means that the primary shard is allocated but
-replicas are not, and `green` means that all shards are allocated. The
-index level status is controlled by the worst shard status. The cluster
-status is controlled by the worst index status.
+集群健康状态分为： `绿色` ， `黄色` 或者 `红色` 。在分片级别， `红色` 状态表示指定的
+分片在集群里没有分配， `黄色` 表示主分片已经分配但是复制的没有分配， `绿色` 表示所有
+分片都已经分配。索引的状态是由最坏的分片的状态控制的。集群的状态是由最坏的索引状态控
+制的。
 
-One of the main benefits of the API is the ability to wait until the
-cluster reaches a certain high water-mark health level. For example, the
-following will wait for 50 seconds for the cluster to reach the `yellow`
-level (if it reaches the `green` or `yellow` status before 50 seconds elapse,
-it will return at that point):
 
 [source,js]
 --------------------------------------------------
@@ -49,37 +40,30 @@ $ curl -XGET 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeo
 
 [float]
 [[request-params]]
-=== Request Parameters
+=== 请求参数
 
-The cluster health API accepts the following request parameters:
+集群健康API接受如下的请求参数：
 
 `level`::
-    Can be one of `cluster`, `indices` or `shards`. Controls the
-    details level of the health information returned. Defaults to `cluster`.
+    可以是 `cluster`, `indices` 或者 `shards` 之一。控制具体的返回的健康信息的级别。
+    默认是 `cluster` .
 
 `wait_for_status`::
-    One of `green`, `yellow` or `red`. Will wait (until
-    the timeout provided) until the status of the cluster changes to the one
-    provided. By default, will not wait for any status.
+    可以是 `green`, `yellow` 或者 `red` 之一. 将会等（直到提供的超时时间结束）到集群
+    的状态变成提供的这个状态为止。默认情况下，不等待任何状态。
 
 `wait_for_relocating_shards`::
-    A number controlling to how many relocating
-    shards to wait for. Usually will be `0` to indicate to wait till all
-    relocation have happened. Defaults to not to wait.
+    控制等待多少分片迁移。 通常是 `0` 表示等到所有的分片迁移结束。默认情况是不等待的。
 
 `wait_for_nodes`::
-    The request waits until the specified number `N` of
-    nodes is available. It also accepts `>=N`, `<=N`, `>N` and `<N`.
-    Alternatively, it is possible to use `ge(N)`, `le(N)`, `gt(N)` and
-    `lt(N)` notation.
+    请求将要等待指定的 `N` 个节点可用。 它也接受 `>=N` , `<=N` , `>N` 以及 `<N` 。相
+    应的，也可以使用  `ge(N)`, `le(N)`, `gt(N)` 以及 `lt(N)` 表示。
 
 `timeout`::
-    A time based parameter controlling how long to wait if one of
-    the wait_for_XXX are provided. Defaults to `30s`.
+    只要有一个类似 wait_for_XXX 的参数， `timeout` 就表示它的等待时间。默认是 `30s`. 
 
 
-The following is an example of getting the cluster health at the
-`shards` level:
+下面的例子展示了获得 `shards` 级别的集群监控程度：
 
 [source,js]
 --------------------------------------------------
